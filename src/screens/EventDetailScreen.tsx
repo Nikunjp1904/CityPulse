@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView, Linking, Button } from 'react-native';
+import { StyleSheet, ScrollView, Linking, TouchableOpacity } from 'react-native';
 import MapPreview from '../components/MapPreview';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/types';
 import i18n from '../utils/i18n.ts';
+import { AppText } from '../components/AppText.tsx';
 
 type EventDetailScreenRouteProp = RouteProp<RootStackParamList, 'EventDetail'>;
 
@@ -19,18 +20,23 @@ const EventDetailScreen: React.FC<Props> = ({ route }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>{event.name}</Text>
-      <Text>Date: {event.dates.start.localDate}</Text>
-      <Text>Venue: {venue?.name}</Text>
-      <Text>City: {venue?.city.name}</Text>
-      <Text style={styles.countryText}>Country: {venue?.country.name}</Text>
+      <AppText style={styles.title}>{event.name}</AppText>
+      <AppText>Date: {event.dates.start.localDate}</AppText>
+      <AppText>Venue: {venue?.name}</AppText>
+      <AppText>City: {venue?.city.name}</AppText>
+      <AppText style={styles.countryText}>Country: {venue?.country.name}</AppText>
       {location && (
         <MapPreview
           latitude={parseFloat(location.latitude)}
           longitude={parseFloat(location.longitude)}
         />
       )}
-      <Button title={i18n.t('buy_ticket')} onPress={() => Linking.openURL(event.url)}/>
+      <TouchableOpacity
+        onPress={() => Linking.openURL(event.url)}
+        style={styles.buttonContainer}
+      >
+        <AppText style={styles.buyTicket}>{i18n.t('buy_ticket')}</AppText>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -38,7 +44,9 @@ const EventDetailScreen: React.FC<Props> = ({ route }) => {
 export default EventDetailScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 15 },
+  container: { flex: 1, margin: 15 },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
-  countryText: { marginBottom: 20 }
+  countryText: { marginBottom: 20 },
+  buttonContainer: { backgroundColor: '#007AFF', paddingVertical: 10, borderRadius: 4 },
+  buyTicket: { color: '#FFF', alignSelf: 'center' }
 });

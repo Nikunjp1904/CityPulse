@@ -55,6 +55,7 @@ export const setI18nConfig = async (languageTag?: string) => {
   }
   const isRTL = selectedLangTag === 'ar';
   i18n.locale = selectedLangTag;
+  I18nManager.allowRTL(isRTL);
   I18nManager.forceRTL(isRTL);
   await AsyncStorage.setItem(LANGUAGE_KEY, selectedLangTag);
 };

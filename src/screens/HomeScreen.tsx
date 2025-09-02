@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import {
   View,
-  Text,
-  TextInput,
   FlatList,
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { fetchEvents, loadFavorites, toggleFavorite } from '../redux/actions/eventActions';
@@ -16,6 +15,9 @@ import EventCard from '../components/EventCard';
 import i18n, { setI18nConfig } from '../utils/i18n';
 import { useAppDispatch } from '../redux/hooks.ts';
 import { CommonActions } from '@react-navigation/native';
+import RNRestart from 'react-native-restart';
+import { AppTextInput } from '../components/AppTextInput.tsx';
+import { AppText } from '../components/AppText.tsx';
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -37,7 +39,7 @@ const HomeScreen = ({ navigation }: any) => {
           onPress={() => navigation.navigate('Profile')}
           style={styles.profileContainer}
         >
-          <Text style={styles.profile}>{i18n.t('profile')}</Text>
+          <AppText style={styles.profile}>{i18n.t('profile')}</AppText>
         </TouchableOpacity>
       )
     });
@@ -60,25 +62,29 @@ const HomeScreen = ({ navigation }: any) => {
     const newLang = i18n.locale === 'en' ? 'ar' : 'en';
     await setI18nConfig(newLang);
 
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Home' }]
-      })
-    );
+    if (Platform.OS === 'ios') {
+      RNRestart.restart();
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Home' }]
+        })
+      );
+    }
   };
 
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <TextInput
+        <AppTextInput
           placeholder={i18n.t('search_placeholder')}
           style={styles.input}
           value={keyword}
           onChangeText={setKeyword}
         />
-        <TextInput
+        <AppTextInput
           placeholder={i18n.t('city_placeholder')}
           style={styles.input}
           value={city}
@@ -88,21 +94,21 @@ const HomeScreen = ({ navigation }: any) => {
           onPress={onSearch}
           style={styles.buttonContainer}
         >
-          <Text style={styles.buttonText}>{i18n.t('search')}</Text>
+          <AppText style={styles.buttonText}>{i18n.t('search')}</AppText>
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         onPress={toggleLanguage}
         style={styles.buttonContainer}
       >
-        <Text style={styles.buttonText}>{i18n.t('toggle_language')}</Text>
+        <AppText style={styles.buttonText}>{i18n.t('toggle_language')}</AppText>
       </TouchableOpacity>
 
-      {loading && <ActivityIndicator size="large" color="#000" style={styles.loading} />}
-      {error && <Text style={styles.error}>{error}</Text>}
+      {loading && <ActivityIndicator size="large" color="#000" style={styles.loading}/>}
+      {error && <AppText style={styles.error}>{error}</AppText>}
 
       {!loading && hasSearched && events.length === 0 && (
-        <Text style={styles.noResults}>No results found</Text>
+        <AppText style={styles.noResults}>No results found</AppText>
       )}
 
       {!loading && events.length !== 0 && (

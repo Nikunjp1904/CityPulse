@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
-  TouchableOpacity, Alert
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { login } from '../redux/actions/authActions';
 import { RootState } from '../redux/reducers/rootReducer';
 import i18n from '../utils/i18n';
 import { useAppDispatch } from '../redux/hooks.ts';
+import { AppTextInput } from '../components/AppTextInput.tsx';
+import { AppText } from '../components/AppText.tsx';
 
 const LoginScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -36,8 +37,8 @@ const LoginScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{i18n.t('login')}</Text>
-      <TextInput
+      <AppText style={styles.title}>{i18n.t('login')}</AppText>
+      <AppTextInput
         placeholder={i18n.t('email')}
         style={styles.input}
         value={email}
@@ -45,22 +46,22 @@ const LoginScreen = ({ navigation }: any) => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <TextInput
+      <AppTextInput
         placeholder={i18n.t('password')}
         style={styles.input}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      {authState.error && <Text style={styles.error}>{authState.error}</Text>}
+      {authState.error && <AppText style={styles.error}>{authState.error}</AppText>}
       <TouchableOpacity
         onPress={onLogin}
         style={styles.loginContainer}
       >
-        <Text style={styles.login}>{i18n.t('login')}</Text>
+        <AppText style={styles.login}>{i18n.t('login')}</AppText>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.link}>{i18n.t('signup')}</Text>
+        <AppText style={styles.link}>{i18n.t('signup')}</AppText>
       </TouchableOpacity>
     </View>
   );

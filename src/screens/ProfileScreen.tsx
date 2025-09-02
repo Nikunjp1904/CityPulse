@@ -1,5 +1,5 @@
 import React, { useCallback, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/reducers/rootReducer';
 import { logout } from '../redux/actions/authActions';
@@ -7,6 +7,7 @@ import { toggleFavorite } from '../redux/actions/eventActions';
 import EventCard from '../components/EventCard';
 import i18n from '../utils/i18n';
 import { useAppDispatch } from '../redux/hooks.ts';
+import { AppText } from '../components/AppText.tsx';
 
 const ProfileScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const ProfileScreen = ({ navigation }: any) => {
             onPress={onLogout}
             style={styles.logoutContainer}
           >
-            <Text style={styles.logout}>{i18n.t('logout')}</Text>
+            <AppText style={styles.logout}>{i18n.t('logout')}</AppText>
           </TouchableOpacity>
         )
       });
@@ -42,19 +43,19 @@ const ProfileScreen = ({ navigation }: any) => {
   if (!user) {
     return (
       <View style={styles.container}>
-        <Text>{i18n.t('login_required')}</Text>
+        <AppText>{i18n.t('login_required')}</AppText>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Name:- {user.name}</Text>
-      <Text>Email:- {user.email}</Text>
+      <AppText style={styles.title}>Name:- {user.name}</AppText>
+      <AppText>Email:- {user.email}</AppText>
 
-      <Text style={styles.subTitle}>{i18n.t('favorites')}</Text>
+      <AppText style={styles.subTitle}>{i18n.t('favorites')}</AppText>
       {favoriteEvents.length === 0 ? (
-        <Text>{i18n.t('no_favourite_event')}</Text>
+        <AppText>{i18n.t('no_favourite_event')}</AppText>
       ) : (
         <FlatList
           data={favoriteEvents}

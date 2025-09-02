@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Event } from '../types';
+import { AppText } from './AppText.tsx';
 
 interface Props {
   event: Event;
@@ -16,12 +17,12 @@ const EventCard: React.FC<Props> = ({ event, isFavorite, onToggleFavorite, onPre
     <TouchableOpacity style={styles.card} onPress={onPress}>
       {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image}/>}
       <View style={styles.info}>
-        <Text style={styles.title}>{event.name}</Text>
-        <Text>{event.dates.start.localDate}</Text>
+        <AppText style={styles.title}>{event.name}</AppText>
+        <AppText>{event.dates.start.localDate}</AppText>
         <TouchableOpacity onPress={onToggleFavorite} style={styles.favButton}>
-          <Text style={{ color: isFavorite ? 'red' : 'gray' }}>
+          <AppText style={{ color: isFavorite ? 'red' : 'gray' }}>
             {isFavorite ? '♥' : '♡'}
-          </Text>
+          </AppText>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
