@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -85,10 +84,19 @@ const HomeScreen = ({ navigation }: any) => {
           value={city}
           onChangeText={setCity}
         />
-        <Button title={i18n.t('search')} onPress={onSearch}/>
+        <TouchableOpacity
+          onPress={onSearch}
+          style={styles.buttonContainer}
+        >
+          <Text style={styles.buttonText}>{i18n.t('search')}</Text>
+        </TouchableOpacity>
       </View>
-
-      <Button title={i18n.t('toggle_language')} onPress={toggleLanguage}/>
+      <TouchableOpacity
+        onPress={toggleLanguage}
+        style={styles.buttonContainer}
+      >
+        <Text style={styles.buttonText}>{i18n.t('toggle_language')}</Text>
+      </TouchableOpacity>
 
       {loading && <ActivityIndicator size="large" color="#000" style={styles.loading} />}
       {error && <Text style={styles.error}>{error}</Text>}
@@ -133,5 +141,7 @@ const styles = StyleSheet.create({
   profile: { color: '#007AFF', fontWeight: 'bold' },
   profileContainer: { marginRight: 15 },
   loading: { marginTop: 20 },
-  eventList: { marginTop: 10 }
+  eventList: { marginTop: 10 },
+  buttonContainer: { backgroundColor: '#007AFF', paddingVertical: 10, borderRadius: 4 },
+  buttonText: { color: '#FFF', alignSelf: 'center' }
 });

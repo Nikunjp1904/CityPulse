@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity, Alert
 } from 'react-native';
@@ -54,7 +53,12 @@ const LoginScreen = ({ navigation }: any) => {
         secureTextEntry
       />
       {authState.error && <Text style={styles.error}>{authState.error}</Text>}
-      <Button title={i18n.t('login')} onPress={onLogin}/>
+      <TouchableOpacity
+        onPress={onLogin}
+        style={styles.loginContainer}
+      >
+        <Text style={styles.login}>{i18n.t('login')}</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.link}>{i18n.t('signup')}</Text>
       </TouchableOpacity>
@@ -75,5 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   error: { color: 'red', marginBottom: 10 },
-  link: { marginTop: 15, color: 'blue', textAlign: 'center' }
+  link: { marginTop: 15, color: 'blue', textAlign: 'center' },
+  loginContainer: { backgroundColor: '#007AFF', paddingVertical: 10, borderRadius: 4 },
+  login: { color: '#FFF', alignSelf: 'center' }
 });
