@@ -1,5 +1,10 @@
 # City Pulse – Local Events Explorer
 
+# Example app video
+- Android:- https://app.screencast.com/yDPCMXfcO5swy
+
+- iOS:- https://app.screencast.com/ITyCmteQK8Epr
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
